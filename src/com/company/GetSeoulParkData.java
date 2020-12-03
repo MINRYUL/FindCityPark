@@ -65,7 +65,7 @@ public class GetSeoulParkData{
                         System.out.println("바로가기  : " + getTagValue("TEMPLATE_URL", eElement));
                         System.out.println("주요시설 : " + getTagValue("MAIN_EQUIP", eElement));
                         System.out.println("관리부서 : " + getTagValue("P_NAME", eElement));
-                         */
+                        */
                     }
                 }
 
