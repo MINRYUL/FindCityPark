@@ -1,6 +1,7 @@
 package com.company;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -22,7 +23,7 @@ public class Main {
 
             System.out.println("Connecting PostgreSQL database");
             // JDBC를 이용해 PostgreSQL 서버 및 데이터베이스 연결
-            // Class.forName("org.postgresql.Driver");
+            Class.forName("org.postgresql.Driver");
             con = DriverManager.getConnection(url, user, password);
             st = con.createStatement();
 
@@ -30,12 +31,18 @@ public class Main {
             st.executeUpdate("drop Table Department");
             st.executeUpdate("drop Table Review");
 
-            System.out.println("Creating Park, Department, Review relations");
+            // System.out.println("Creating Park, Department, Review relations");
             // 3개 테이블 생성: Create table문 이용
-            st.executeUpdate("create table Park(parkId int not null,parkName text not null, parkDescription text not null, parkAddress text, region varchar(100) not null, parkTelephone varchar(50), parkUrl text, parkEquip text, dpName varchar(100) not null, PRIMARY KEY(parkId));");
+            st.executeUpdate("create table Park(parkId int not null,parkName text not null, parkDescription text not null, parkAddress text, region varchar(100) not null, parkTelephone varchar(50), parkUrl text, dpName varchar(100) not null, PRIMARY KEY(parkId));");
             st.executeUpdate("create table Department(dpName varchar(100) not null,dpAddress text, varchar(50), PRIMARY KEY(dpName));");
             st.executeUpdate("create table Review(reviewId int not null, writer varchar(20), star int not null, reviewContent varchar(50), parkId int not null, PRIMARY KEY(reviewId));");
 
+            ArrayList<Park> parkList = GetSeoulParkData.getParkArrayList();
+            for(int i = 0; i < parkList.size(); i++){
+                st.executeUpdate("insert into Park values (" + parkList.get(i).getParkId() + ", " + parkList.get(i).getParkName() +
+                        ", " + parkList.get(i).getParkDescription() + ", " + parkList.get(i).getParkAddress() + ", " + parkList.get(i).getRegion() +
+                        ", " + parkList.get(i).getParkTelephon() + ", " + parkList.get(i).getParkUrl() + ", " + parkList.get(i).getDpName() + ");");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

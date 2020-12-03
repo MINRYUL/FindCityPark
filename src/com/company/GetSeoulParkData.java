@@ -1,5 +1,6 @@
 package com.company;
 
+import com.sun.deploy.net.MessageHeader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -10,8 +11,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.ArrayList;
 
 public class GetSeoulParkData{
-    Park park;
-    private ArrayList<Park> parkArrayList;
+    private static ArrayList<Park> parkArrayList = new ArrayList<Park>();
 
     private static String getTagValue(String tag, Element eElement) {
         NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
@@ -21,8 +21,7 @@ public class GetSeoulParkData{
         return nValue.getNodeValue();
     }
 
-
-    public ArrayList<Park> getParkArrayList(){
+    public static ArrayList<Park> getParkArrayList(){
         return parkArrayList;
     }
 
@@ -39,31 +38,38 @@ public class GetSeoulParkData{
 
                 // root tag
                 doc.getDocumentElement().normalize();
-                System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
                 // 파싱할 tag
                 NodeList nList = doc.getElementsByTagName("row");
-                System.out.println("파싱할 리스트 수 : "+ nList.getLength());
 
                 for(int temp = 0; temp < nList.getLength(); temp++){
                     Node nNode = (Node) nList.item(temp);
+                    Park park;
                     if(nNode.getNodeType() == Node.ELEMENT_NODE){
 
                         Element eElement = (Element) nNode;
+                        park = new Park(Integer.parseInt(getTagValue("P_IDX", eElement)), getTagValue("P_PARK", eElement),
+                                getTagValue("P_LIST_CONTENT", eElement), getTagValue("P_ADDR", eElement),
+                                getTagValue("P_ZONE", eElement), getTagValue("P_ADMINTEL", eElement),
+                                getTagValue("TEMPLATE_URL", eElement), getTagValue("MAIN_EQUIP", eElement),
+                                getTagValue("P_NAME", eElement));
+
+                        parkArrayList.add(park);
+                        /*
                         System.out.println("공원번호  : " + getTagValue("P_IDX", eElement));
                         System.out.println("공원명  : " + getTagValue("P_PARK", eElement));
                         System.out.println("공원개요 : " + getTagValue("P_LIST_CONTENT", eElement));
                         System.out.println("공원주소  : " + getTagValue("P_ADDR", eElement));
                         System.out.println("지역 : " + getTagValue("P_ZONE", eElement));
                         System.out.println("전화번호 : " + getTagValue("P_ADMINTEL", eElement));
+                        System.out.println("바로가기  : " + getTagValue("TEMPLATE_URL", eElement));
                         System.out.println("주요시설 : " + getTagValue("MAIN_EQUIP", eElement));
                         System.out.println("관리부서 : " + getTagValue("P_NAME", eElement));
-                        System.out.println("바로가기  : " + getTagValue("TEMPLATE_URL", eElement));
+                         */
                     }
                 }
 
                 page += 1;
-                System.out.println("page number : "+page);
                 if(page > 132){
                     break;
                 }
@@ -72,8 +78,6 @@ public class GetSeoulParkData{
         } catch (Exception e){
             e.printStackTrace();
         }
-
-
 
 
     }
