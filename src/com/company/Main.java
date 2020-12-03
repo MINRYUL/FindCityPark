@@ -14,13 +14,15 @@ public class Main {
         String user = "postgres";
         String password = "1221zxc151";
 
+        GetSeoulParkData.getParkData();
+
         try {
             Scanner scan = new Scanner(System.in);
             System.out.println("SQL Programming Test");
 
             System.out.println("Connecting PostgreSQL database");
             // JDBC를 이용해 PostgreSQL 서버 및 데이터베이스 연결
-            Class.forName("org.postgresql.Driver");
+            // Class.forName("org.postgresql.Driver");
             con = DriverManager.getConnection(url, user, password);
             st = con.createStatement();
 
