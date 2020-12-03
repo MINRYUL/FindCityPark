@@ -9,11 +9,10 @@ public class Main {
         Connection con = null;
         Statement st = null;
         ResultSet rs = null;
-
+        //알아서 바꾸셈
         String url = "jdbc:postgresql://localhost/";
         String user = "postgres";
         String password = "1221zxc151";
-
 
         try {
             Scanner scan = new Scanner(System.in);
@@ -24,20 +23,17 @@ public class Main {
             Class.forName("org.postgresql.Driver");
             con = DriverManager.getConnection(url, user, password);
             st = con.createStatement();
-            //rs = st.executeQuery("SELECT VERSION()");
 
-            st.executeUpdate("drop Table apply cascade");
-            st.executeUpdate("drop Table college");
-            st.executeUpdate("drop Table student");
+            st.executeUpdate("drop Table Park");
+            st.executeUpdate("drop Table Department");
+            st.executeUpdate("drop Table Review");
 
-            System.out.println("Creating College, Student, Apply relations");
+            System.out.println("Creating Park, Department, Review relations");
             // 3개 테이블 생성: Create table문 이용
-            st.executeUpdate("create table College(cName varchar(20), state varchar(20), enrollment int);");
-            st.executeUpdate("create table Student(sID int, sName varchar(20), GPA numeric(2,1), sizeHS int);");
-            st.executeUpdate("create table Apply(sID int, cName varchar(20), major varchar(20), decision char);");
+            st.executeUpdate("create table Park(parkId int not null,parkName text not null, parkDescription text not null, parkAddress text, region varchar(100) not null, parkTelephone varchar(50), parkUrl text, parkEquip text, dpName varchar(100) not null, PRIMARY KEY(parkId));");
+            st.executeUpdate("create table Department(dpName varchar(100) not null,dpAddress text, varchar(50), PRIMARY KEY(dpName));");
+            st.executeUpdate("create table Review(reviewId int not null, writer varchar(20), star int not null, reviewContent varchar(50), parkId int not null, PRIMARY KEY(reviewId));");
 
-            System.out.println("Continue? (Enter 1 for continue)");
-            scan.nextLine();
 
         } catch (Exception e) {
             e.printStackTrace();
