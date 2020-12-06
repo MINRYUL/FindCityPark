@@ -47,7 +47,7 @@ public class GetAirCondition {
                     if(nNode.getNodeType() == Node.ELEMENT_NODE){
 
                         Element eElement = (Element) nNode;
-                        airCondition = new AirCondition(getTagValue("MSRADMCODE", eElement),
+                        airCondition = new AirCondition(getTagValue("MSRSTENAME", eElement),
                                 getTagValue("GRADE", eElement), getTagValue("OZONE", eElement),
                                 Double.parseDouble(getTagValue("CARBON", eElement)),
                                 Integer.parseInt(getTagValue("PM10", eElement)),
