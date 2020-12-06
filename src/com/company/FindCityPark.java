@@ -65,8 +65,8 @@ public class FindCityPark {
             st.executeUpdate("insert into Review values('1', '김말국', 5, '공원에 공기가 좋네요', 5);");
             st.executeUpdate("insert into Review values('2', '미나', 4, '비둘기 똥이 많음', 1);");
             st.executeUpdate("insert into Review values('3', '요미', 3, '흡연구역이 없음', 3);");
-            st.executeUpdate("insert into Review values('4', '제시', 2, '편의점이 있어서 좋음', 5);");
-            st.executeUpdate("insert into Review values('5', '사라키', 1, '조용해서 좋아여', 4);");
+            st.executeUpdate("insert into Review values('4', '제시', 2, '편의점이 있어서 좋음', 70);");
+            st.executeUpdate("insert into Review values('5', '사라키', 1, '조용해서 좋아여', 70);");
 
             //department 삽입
             st.executeUpdate("insert into Department values('도봉구청 공원녹지과', '서울 도봉구 마들로 656', '02-2091-2120');");
