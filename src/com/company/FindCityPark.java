@@ -47,15 +47,15 @@ public class FindCityPark {
 
 
             // 디비에 삽입
-
-//            System.out.println(parkList.get(0).getParkId());
-//            System.out.println(parkList.get(0).getParkName());
-//            System.out.println(parkList.get(0).getParkDescription());
-//            System.out.println(parkList.get(0).getParkAddress());
-//            System.out.println(parkList.get(0).getRegion());
-//            System.out.println(parkList.get(0).getParkTelephon());
-//            System.out.println(parkList.get(0).getParkUrl());
-//            System.out.println(parkList.get(0).getDpName());
+            ArrayList<Park> parkList = GetSeoulParkData.getParkArrayList();
+            System.out.println(parkList.get(12).getParkId());
+            System.out.println(parkList.get(12).getParkName());
+            System.out.println(parkList.get(12).getParkDescription());
+            System.out.println(parkList.get(12).getParkAddress());
+            System.out.println(parkList.get(12).getRegion());
+            System.out.println(parkList.get(12).getParkTelephon());
+            System.out.println(parkList.get(12).getParkUrl());
+            System.out.println(parkList.get(12).getDpName());
 
             ArrayList<AirCondition> airConditionArrayList = GetAirCondition.getAirConditionArrayList();
             for(int i = 0; i < airConditionArrayList.size(); i++){
@@ -66,16 +66,16 @@ public class FindCityPark {
                         "'" + airConditionArrayList.get(i).getUltraFineDust() + "');");
             }
 
-            ArrayList<Park> parkList = GetSeoulParkData.getParkArrayList();
+//            ArrayList<Park> parkList = GetSeoulParkData.getParkArrayList();
             // 이거 작은 따옴표 처리 어떻게 할것인지
             // 일단 parkId = 12, 53, 54 가 문제가 있는데 이걸 일일히 찾을 수도 없고 어떻게해야하지????????? 구글링하다가 자러갑니당...
-//            for(int i = 0; i < parkList.size(); i++){
-//                if (parkList.get(i).getParkId() == 12 || parkList.get(i).getParkId() == 53 || parkList.get(i).getParkId() == 54) continue;
-//                st.executeUpdate("insert into Park values (" + "'" + parkList.get(i).getParkId() + "', " + "'" + parkList.get(i).getParkName() + "', " +
-//                        "'" + parkList.get(i).getParkDescription() + "', " + "'" + parkList.get(i).getParkAddress() + "', " +
-//                        "'" + parkList.get(i).getRegion() + "', " + "'" + parkList.get(i).getParkTelephon() + "', " +
-//                        "'" + parkList.get(i).getParkUrl() + "', " + "'" + parkList.get(i).getDpName() + "');");
-//            }
+            for(int i = 0; i < parkList.size(); i++){
+                String text = parkList.get(i).getParkDescription().replace("'", "*");
+                st.executeUpdate("insert into Park values (" + "'" + parkList.get(i).getParkId() + "', " + "'" + parkList.get(i).getParkName() + "', " +
+                        "'" + text + "', " + "'" + parkList.get(i).getParkAddress() + "', " +
+                        "'" + parkList.get(i).getRegion() + "', " + "'" + parkList.get(i).getParkTelephon() + "', " +
+                        "'" + parkList.get(i).getParkUrl() + "', " + "'" + parkList.get(i).getDpName() + "');");
+            }
 
             //Review 삽입
             st.executeUpdate("insert into Review values('1', '김말국', 5, '공원에 공기가 좋네요', 5);");
@@ -88,6 +88,10 @@ public class FindCityPark {
             st.executeUpdate("insert into Department values('도봉구청 공원녹지과', '서울 도봉구 마들로 656', '02-2091-2120');");
             st.executeUpdate("insert into Department values('중랑구청 공원녹지과', '서울 중랑구 봉화산로 179 ', '02-2094-0114');");
             st.executeUpdate("insert into Department values('동작구청 공원녹지과', '서울 동작구 장승배기로 161', '02-820-1114');");
+            st.executeUpdate("insert into Department values('금천구 공원녹지과', '서울 금천구 시흥대로73길 70', '02-2627-2114');");
+            st.executeUpdate("insert into Department values('관악구청 공원녹지과', '서울 관악구 관악로 145', '02-879-5000');");
+            st.executeUpdate("insert into Department values('서대문구청 푸른도시과', '서울 서대문구 연희로 248', '02-330-1301');");
+            st.executeUpdate("insert into Department values('성동구청 공원녹지과', '서울 성동구 고산자로 270', '02-2286-5114');");
 
             String userRegion; // 거주지역(구) 입력받기
             String parkId;     // parkId 입력받기
@@ -146,7 +150,7 @@ public class FindCityPark {
             // 6. 관리부서 보기
             rs = st.executeQuery("select dpName, dpAddress, dpTelephone\n" +
                     "from Park, Department\n" +
-                    "where Park." + dpName + " = Department." + dpName + " and Park.parkId = " + parkId + ";");
+                    "where Park.dpName and Department.dpName and Park.parkId = " + parkId + "Park.dpName = " + dpName + ";");
 
             // 관리부서 출력
         } catch (Exception e) {
