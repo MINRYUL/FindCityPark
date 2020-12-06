@@ -1,8 +1,8 @@
 package com.company;
 
-        import java.sql.*;
-        import java.util.ArrayList;
-        import java.util.Scanner;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class FindCityPark {
 
@@ -13,7 +13,7 @@ public class FindCityPark {
 
         String url = "jdbc:postgresql://localhost/";
         String user = "postgres";
-        String password = "사용자비밀번호";
+        String password = "관리자비밀번호";
 
         GetSeoulParkData.getParkData();
         GetAirCondition.getAirCondition();
@@ -34,7 +34,7 @@ public class FindCityPark {
             st.executeUpdate("drop Table Department cascade");
             st.executeUpdate("drop Table Review cascade");
             st.executeUpdate("drop Table AirCondition cascade");
-            
+
             // 3개 테이블 생성: Create table문 이용
             st.executeUpdate("create table Park(parkId int not null, parkName text not null, parkDescription text not null, parkAddress text, region varchar(100) not null, parkTelephone varchar(50), parkUrl text, dpName varchar(100) not null, PRIMARY KEY(parkId));");
             st.executeUpdate("create table Department(dpName varchar(100) not null,dpAddress text, dpTelephone varchar(50), PRIMARY KEY(dpName));");
@@ -80,6 +80,7 @@ public class FindCityPark {
             String userRegion = null; // 거주지역(구) 입력받기
             String parkId = null;     // parkId 입력받기
             String dpName = null;     // 리뷰볼 때 join하기 위해 사용됨
+            String parkName = null;
 
             System.out.print("지역구를 입력하세요 : ");
             userRegion = scan.nextLine();
@@ -96,6 +97,8 @@ public class FindCityPark {
             // 위 쿼리를 통해서 parkName 들을 보여주기
 
             // parkName 하나 입력받기
+            System.out.print("공원명을 입력하세요 : ");
+            parkName = scan.nextLine();
 
             /* 아래부터는 입력받은 것을 기반으로 본격 서비스 시작 */
 
@@ -113,27 +116,36 @@ public class FindCityPark {
 
             // parkAddress출력
 
-            // 3. 현재 대기 환경
+            // 4. 현재 대기 환경
             rs = st.executeQuery("select airStatus, ozone, carbon, fineDust, ultraFineDust \n" +
                     "from Park, AirCondition \n" +
                     "where Park.region = AirCondition.region and " + " Park.region = '" + userRegion + "';");
 
             // 대기환경 다 출력
 
-            // 4. 리뷰 보기
+            // 5. 리뷰 보기
             rs = st.executeQuery("select parkName, writer, star, reviewContent \n" +
                     "from Park, Review\n" +
-                    "where Park.parkId = Review.parkId and Park.parkId = " + parkId + " and region = '" + userRegion +"';");
+                    "where Park.parkId = Review.parkId and Park.parkName = '" + parkName + "' and region = '" + userRegion +"';");
 
             // 리뷰 다 출력하기
+            System.out.printf("%-20s %-10s %-5s %-20s\n", "parkName", "writer", "star", "reviewContent");
+            System.out.println("---------------------------------------------------------");
+            while(rs.next()) {
+                String parkName1 = rs.getString("parkName");
+                String writer = rs.getString("writer");
+                int star = rs.getInt("star");
+                String reviewContent = rs.getString("reviewContent");
 
-            // 5. 관리부서 보기
+                System.out.printf("%-20s %-10s %-5d %-20s\n", parkName1, writer, star, reviewContent);
+            }
+
+            // 6. 관리부서 보기
             rs = st.executeQuery("select parkName, Park.dpName, dpAddress, dpTelephone\n" +
                     "from Park, Department\n" +
                     "where Park.dpName = Department.dpName and Park.parkId = " + parkId + " and Park.dpName = '" + dpName + "';");
 
             // 관리부서 출력
-            
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
