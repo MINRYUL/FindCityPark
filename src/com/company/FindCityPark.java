@@ -34,17 +34,10 @@ public class FindCityPark {
 
             // System.out.println("Creating Park, Department, Review relations");
             // 3개 테이블 생성: Create table문 이용
-//            st.executeUpdate("create table Park(parkId int not null, parkName text not null, parkDescription text not null, parkAddress text, region varchar(100) not null, parkTelephone varchar(50), parkUrl text, dpName varchar(100) not null, PRIMARY KEY(parkId));");
-//            st.executeUpdate("create table Department(dpName varchar(100) not null,dpAddress text, dpTelephone varchar(50), PRIMARY KEY(dpName));");
-//            st.executeUpdate("create table Review(reviewId int not null, writer varchar(20), star int not null, reviewContent varchar(50), parkId int not null, PRIMARY KEY(reviewId));");
-//            st.executeUpdate("create table AirCondition(region varchar(100) not null, airStatus varchar(10), ozone double precision, carbon double precision, fineDust int, ultraFineDust int, PRIMARY KEY(region));");
-
-            // air condition에서 region 삭제하면 돼
             st.executeUpdate("create table Park(parkId int not null, parkName text not null, parkDescription text not null, parkAddress text, region varchar(100) not null, parkTelephone varchar(50), parkUrl text, dpName varchar(100) not null, PRIMARY KEY(parkId));");
             st.executeUpdate("create table Department(dpName varchar(100) not null,dpAddress text, dpTelephone varchar(50), PRIMARY KEY(dpName));");
             st.executeUpdate("create table Review(reviewId int not null, writer varchar(20), star int not null, reviewContent varchar(50), parkId int not null, PRIMARY KEY(reviewId));");
-            st.executeUpdate("create table AirCondition(region varchar(100) not null, airStatus varchar(10), ozone double precision, carbon double precision, fineDust int, ultraFineDust int);");
-
+            st.executeUpdate("create table AirCondition(region varchar(100) not null, airStatus varchar(10), ozone double precision, carbon double precision, fineDust int, ultraFineDust int, PRIMARY KEY(region));");
 
             // 디비에 삽입
             ArrayList<Park> parkList = GetSeoulParkData.getParkArrayList();
@@ -58,7 +51,7 @@ public class FindCityPark {
             System.out.println(parkList.get(12).getDpName());
 
             ArrayList<AirCondition> airConditionArrayList = GetAirCondition.getAirConditionArrayList();
-            for(int i = 0; i < airConditionArrayList.size(); i++){
+            for(int i = 0; i < 25; i++){
                 if (airConditionArrayList.get(i).getRegion() == "111123") continue;
                 st.executeUpdate("insert into AirCondition values (" + "'" + airConditionArrayList.get(i).getRegion() + "', " +
                         "'" + airConditionArrayList.get(i).getAirStatus() + "', " + "'" + airConditionArrayList.get(i).getOZone() + "', " +
@@ -67,8 +60,6 @@ public class FindCityPark {
             }
 
 //            ArrayList<Park> parkList = GetSeoulParkData.getParkArrayList();
-            // 이거 작은 따옴표 처리 어떻게 할것인지
-            // 일단 parkId = 12, 53, 54 가 문제가 있는데 이걸 일일히 찾을 수도 없고 어떻게해야하지????????? 구글링하다가 자러갑니당...
             for(int i = 0; i < parkList.size(); i++){
                 String text = parkList.get(i).getParkDescription().replace("'", "*");
                 st.executeUpdate("insert into Park values (" + "'" + parkList.get(i).getParkId() + "', " + "'" + parkList.get(i).getParkName() + "', " +
@@ -100,7 +91,7 @@ public class FindCityPark {
             System.out.println("지역(구)을 입력하세요 : ");
             userRegion = scan.nextLine();
 
-            rs = st.executeQuery("select parkId parkName\n" +
+            rs = st.executeQuery("select parkId, dpName\n" +
                     "from Park \n" +
                     "where region = " + userRegion + ";");
 
