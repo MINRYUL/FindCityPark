@@ -4,12 +4,12 @@ public class AirCondition {
     private String region;
     private String airStatus;
     private String oZone;
-    private double carbon;
-    private int fineDust;
-    private int ultraFineDust;
+    private String carbon;
+    private String fineDust;
+    private String ultraFineDust;
 
     public AirCondition(){};
-    public AirCondition(String region, String airStatus, String oZone, double carbon, int fineDust, int ultraFineDust){
+    public AirCondition(String region, String airStatus, String oZone, String carbon, String fineDust, String ultraFineDust){
         this.region = region;
         this.airStatus = airStatus;
         this.oZone = oZone;
@@ -27,13 +27,13 @@ public class AirCondition {
     public String getOZone(){
         return this.oZone;
     }
-    public double getCarbon(){
+    public String getCarbon(){
         return this.carbon;
     }
-    public int getFineDust(){
+    public String getFineDust(){
         return this.fineDust;
     }
-    public int getUltraFineDust(){
+    public String getUltraFineDust(){
         return this.ultraFineDust;
     }
 }

@@ -35,7 +35,7 @@ public class FindCityPark {
             // 3개 테이블 생성: Create table문 이용
             st.executeUpdate("create table Park(parkId int not null, parkName text not null, parkDescription text not null, parkAddress text, region varchar(100) not null, parkTelephone varchar(50), parkUrl text, dpName varchar(100) not null, PRIMARY KEY(parkId));");
             st.executeUpdate("create table Review(reviewId int not null, writer varchar(20), star int not null, reviewContent varchar(50), parkId int not null, PRIMARY KEY(reviewId));");
-            st.executeUpdate("create table AirCondition(region varchar(100) not null, airStatus varchar(10), ozone double precision, carbon double precision, fineDust int, ultraFineDust int, PRIMARY KEY(region));");
+            st.executeUpdate("create table AirCondition(region varchar(100) not null, airStatus varchar(10), ozone varchar(10), carbon varchar(10), fineDust varchar(10), ultraFineDust varchar(10), PRIMARY KEY(region));");
 
             // 디비에 삽입
             ArrayList<Park> parkList = GetSeoulParkData.getParkArrayList();
@@ -55,30 +55,7 @@ public class FindCityPark {
                         "'" + parkList.get(i).getRegion() + "', " + "'" + parkList.get(i).getParkTelephon() + "', " +
                         "'" + parkList.get(i).getParkUrl() + "', '" + parkList.get(i).getDpName() + "');");
             }
-
-//            for (int i = 0; i < parkList.size(); i++) {
-//                st.executeUpdate("insert into Review values('"+ i +"', '김말국', 5, '공원에 공기가 좋네요', 1);");
-//                i++;
-//                st.executeUpdate("insert into Review values('"+ i +"', '미나', 4, '비둘기 똥이 많음', 3);");
-//                i++;
-//                st.executeUpdate("insert into Review values('"+ i +"', '요미', 3, '흡연구역이 없음', 4);");
-//                i++;
-//                st.executeUpdate("insert into Review values('"+ i +"', '제시', 2, '편의점이 있어서 좋음', 5);");
-//                i++;
-//                st.executeUpdate("insert into Review values('"+ i +"', '사라키', 1, '조용해서 좋아여', 6);");
-//                i++;
-//                st.executeUpdate("insert into Review values('"+ i +"', '뀨뀨', 5, '공원에 공기가 좋네요', 12);");
-//                i++;
-//                st.executeUpdate("insert into Review values('"+ i +"', '꾸잉', 4, '시설이 되게 잘 되어있어요', 13);");
-//                i++;
-//                st.executeUpdate("insert into Review values('"+ i +"', '케케', 3, '걍 쏘쏘', 16);");
-//                i++;
-//                st.executeUpdate("insert into Review values('"+ i +"', '뀨잉', 2, '너무 아무것도 업슴', 17);");
-//                i++;
-//                st.executeUpdate("insert into Review values('"+ i +"', '기요미', 5, '편안하고 좋네용!', 18);");
-//                i++
-//            }
-//
+            
             // 그냥 직접 넣었슴다
             st.executeUpdate("insert into Review values('1', '김말국', 5, '공원에 공기가 좋네요', 1);");
             st.executeUpdate("insert into Review values('2', '미나', 4, '비둘기 똥이 많음', 3);");
