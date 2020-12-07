@@ -70,7 +70,7 @@ public class GetSeoulParkData{
                 }
 
                 page += 1;
-                if(page > 132){ // 이거 바꿔도 안돼 ㅠㅡㅠ
+                if(page > 1500){ // 이거 바꿔도 안돼 ㅠㅡㅠ
                     break;
                 }
             }
