@@ -51,8 +51,7 @@ public class GetSeoulParkData{
                         park = new Park(Integer.parseInt(getTagValue("P_IDX", eElement)), getTagValue("P_PARK", eElement),
                                 getTagValue("P_LIST_CONTENT", eElement), getTagValue("P_ADDR", eElement),
                                 getTagValue("P_ZONE", eElement), getTagValue("P_ADMINTEL", eElement),
-                                getTagValue("TEMPLATE_URL", eElement), getTagValue("MAIN_EQUIP", eElement),
-                                getTagValue("P_NAME", eElement));
+                                getTagValue("TEMPLATE_URL", eElement));
 
                         parkArrayList.add(park);
                         /*
@@ -70,7 +69,7 @@ public class GetSeoulParkData{
                 }
 
                 page += 1;
-                if(page > 1500){ // 이거 바꿔도 안돼 ㅠㅡㅠ
+                if(page > 1500){
                     break;
                 }
             }

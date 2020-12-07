@@ -8,14 +8,12 @@ public class Park {
     private String region;
     private String parkTelephon;
     private String parkUrl;
-    private String parkEquip;
-    private String dpName;
     private int primaryKey;
 
     public Park(){
     }
 
-    public Park(int parkId, String parkName, String parkDescription, String parkAddress, String region, String parkTelephon, String parkUrl, String parkEquip, String dpName){
+    public Park(int parkId, String parkName, String parkDescription, String parkAddress, String region, String parkTelephon, String parkUrl){
         this.parkId = parkId;
         this.parkName = parkName;
         this.parkDescription = parkDescription;
@@ -23,8 +21,6 @@ public class Park {
         this.region = region;
         this.parkTelephon = parkTelephon;
         this.parkUrl = parkUrl;
-        this.parkEquip = parkEquip;
-        this.dpName = dpName;
     }
     public int primaryKey(){
         return this.primaryKey;
@@ -52,12 +48,6 @@ public class Park {
     }
     public String getParkUrl(){
         return this.parkUrl;
-    }
-    public String getParkEquip(){
-        return this.parkEquip;
-    }
-    public String getDpName(){
-        return this.dpName;
     }
 
 }

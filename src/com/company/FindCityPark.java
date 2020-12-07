@@ -33,7 +33,7 @@ public class FindCityPark {
             st.executeUpdate("drop Table AirCondition cascade");
 
             // 3개 테이블 생성: Create table문 이용
-            st.executeUpdate("create table Park(parkId int not null, parkName text not null, parkDescription text not null, parkAddress text, region varchar(100) not null, parkTelephone varchar(50), parkUrl text, dpName varchar(100) not null, PRIMARY KEY(parkId));");
+            st.executeUpdate("create table Park(parkId int not null, parkName text not null, parkDescription text not null, parkAddress text, region varchar(100) not null, parkTelephone varchar(50), parkUrl text, PRIMARY KEY(parkId));");
             st.executeUpdate("create table Review(reviewId int not null, writer varchar(20), star int not null, reviewContent varchar(50), parkId int not null, PRIMARY KEY(reviewId));");
             st.executeUpdate("create table AirCondition(region varchar(100) not null, airStatus varchar(10), ozone varchar(10), carbon varchar(10), fineDust varchar(10), ultraFineDust varchar(10), PRIMARY KEY(region));");
 
@@ -48,12 +48,12 @@ public class FindCityPark {
                         "'" + airConditionArrayList.get(i).getUltraFineDust() + "');");
             }
 
-            for(int i = 0; i < parkList.size(); i++){
+            for(int i = 0; i < 114; i++){
                 String descText = parkList.get(i).getParkDescription().replace("'", "*");
                 st.executeUpdate("insert into Park values (" + "'" + parkList.get(i).getParkId() + "', " + "'" + parkList.get(i).getParkName() + "', " +
                         "'" + descText + "', " + "'" + parkList.get(i).getParkAddress() + "', " +
                         "'" + parkList.get(i).getRegion() + "', " + "'" + parkList.get(i).getParkTelephon() + "', " +
-                        "'" + parkList.get(i).getParkUrl() + "', '" + parkList.get(i).getDpName() + "');");
+                        "'" + parkList.get(i).getParkUrl() + "');");
             }
             
             // 그냥 직접 넣었슴다
@@ -161,7 +161,7 @@ public class FindCityPark {
             st.executeUpdate("insert into Review values('93', '하늘', 4, '깨끗하고 평화로워용', 128);");
             st.executeUpdate("insert into Review values('94', '뀨엥', 3, '걍 그럼ㅋ', 128);");
             st.executeUpdate("insert into Review values('95', '안녕', 3, '그냥저냥이에요', 128);");
-            st.executeUpdate("insert into Review values('96', '인생뭐있나', 4, '인생이 힘들때 휴식 겸 오기 좋네여', 128);");
+            st.executeUpdate("insert into Review values('96', '인생ㅋ', 4, '인생이 힘들때 휴식 겸 오기 좋네여', 128);");
 
             String userRegion = null; // 거주지역(구) 입력받기
             String parkId = null;     // parkId 입력받기
@@ -177,7 +177,7 @@ public class FindCityPark {
 
             int idx = 1;
             while (rs.next()) {
-                if (idx == 15 || idx == 30 || idx == 45 || idx == 60 || idx == 75 || idx == 90) System.out.println(" ");
+                if (idx == 15 || idx == 30 || idx == 45 || idx == 60 || idx == 75 || idx == 90 || idx == 105) System.out.println(" ");
                 System.out.print(idx + ") " + rs.getString("region") + " ");
                 idx++;
             }
@@ -189,7 +189,7 @@ public class FindCityPark {
             System.out.print("지역구를 입력하세요 : ");
             userRegion = scanner.nextLine();
 
-            rs = st.executeQuery("select parkId, parkName, dpName " +
+            rs = st.executeQuery("select parkId, parkName " +
                     "from Park " +
                     "where region = '" + userRegion + "';");
 
