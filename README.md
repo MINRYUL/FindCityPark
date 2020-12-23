@@ -1,4 +1,4 @@
-# FindCityPark
+# JDBC Seoul Park
 
 2020년도 2학기 데이터베이스 수업에서 진행된 프로젝트입니다.
 
